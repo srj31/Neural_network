@@ -33,4 +33,31 @@ def propagation(w,b,X,Y):
 
 	dw = 1/m*np.dot(X,(A-Y).T)
 	db = 1/m*np.sum(A-Y)
-	 
+
+	grads = {"dw":dw , "db" : db}
+
+	return grads, cost
+
+
+def optimize(w,b,X,Y,num_iterations,learning_rate):
+	"""
+		Implementing the gradient descent algorithm 
+
+		Return:
+		params - the final value of the parameters or the weight
+
+	"""
+
+	for i in range(num_iterations):
+
+		grad, cost = propagation(w,b,X,Y)
+		dw = grad["dw"]
+		db = grad["db"]
+
+		w = w - learning_rate*dw
+		b = b - learning_rate*db
+
+	params = {"w":w , "b" :b}
+	grad = {"dw":dw , "db":db}
+
+	return params,grad, cost 
